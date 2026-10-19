@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Student>
+<a href="/Admin/Student/Add" class="btn btn-primary">Create Student</a>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Mã</th>
+			<th>Họ tên</th>
+			<th>Ảnh đại diện</th>
+			<th>Ngày sinh</th>
+			<th>Ngành</th>
+			<th>Giới tính</th>
+			<th>Hệ ĐT</th>
+			<th>Địa chỉ</th>
+			<th>Email</th>
+			
+		</tr>
+	</thead>
+<tbody>
+	@foreach(var s in Model)
+		{
+			<tr>
+				<td>@s.Id</td>
+				<td>@s.Name</td>
+				<td>
+					@if (!string.IsNullOrEmpty(s.AvatarUrl))
+					{
+						<img src="@s.AvatarUrl" width="45" height="45" style="object-fit:cover; border-radius:50%;" />
+					}
+					else
+					{
+						<span>Chưa có</span>
+					}
+				</td>
+				<td>@s.DateOfBorth</td>
+				@{
+					string str = "";
+					switch(s.Branch)
+					{
+						case Branch.IT:
+							str = "CNTT";
+							break;
+						case Branch.BE:
+							str = "Kinh tế";
+							break;
+						case Branch.CE:
+							str = "Công trình";
+							break;
+						case Branch.EE:
+							str = "Điện - Điện tử";
+							break;
+
+					}
+				}
+				<td>@str</td>
+				<td>@(s.Gender == Gender.Male? "Nam": "Nữ")</td>
+				<td>@(s.IsRegular ? "Chính quy": "Phi chính quy")</td>
+				<td>@s.Address</td>
+				<td>@s.Email</td>
+			</tr>
+		}
+	</tbody>
+</table>
